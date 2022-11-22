@@ -8,7 +8,7 @@ public class StudentMapper {
     private StudentMapper() {
     }
 
-    public static List<StudentInfoDto> mapStudentListToStudentDtoList(List<Student> students) {
+    public static List<StudentInfoDto> mapStudentListToStudentInfoDtoList(List<Student> students) {
         return students.stream()
                 .map(student -> StudentInfoDto.builder()
                         .id(student.getId())
@@ -19,7 +19,7 @@ public class StudentMapper {
                         .major(student.getMajor())
                         .build())
                 .collect(Collectors.toList());
-        // do listy studentow trzeba bedzie zrobic kolejne dto? z listą do listy wszystkich studnetow
+
     }
 
     public static Student mapStudentInfoDtoToStudent(Long id, StudentInfoDto studentInfoDto) {

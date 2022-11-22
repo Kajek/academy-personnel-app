@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.practice.student.StudentMapper.mapStudentListToStudentDtoList;
+import static com.practice.student.StudentMapper.mapStudentListToStudentInfoDtoList;
 import static com.practice.student.StudentMapper.mapStudentInfoDtoToStudent;
 
 @Slf4j
@@ -21,15 +21,17 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-//    @GetMapping("/students")
-//    public List<Student> getStudents(){
-//        return studentService.getAllStudents();
-//    }
 
-    @ResponseStatus(HttpStatus.OK)//przerobić z listą nauczycieli, inne dto, mapujące z relacją
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/students")
     public List<StudentInfoDto> getStudents() {
-        return mapStudentListToStudentDtoList(studentService.getAllStudents());
+        return mapStudentListToStudentInfoDtoList(studentService.getAllStudents());
+
+    }
+    @ResponseStatus(HttpStatus.OK)//przerobić z listą nauczycieli, inne dto, mapujące z relacją
+    @GetMapping("/students/teachers")
+    public List<StudentInfoDto> getStudentsWithTeachers() {
+        return mapStudentListToStudentInfoDtoList(studentService.getAllStudents());
 
     }
 
@@ -55,13 +57,13 @@ public class StudentController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/students/name/{name}") //case sensitive
     public List<StudentInfoDto> getStudentsByName(@PathVariable String name) {
-        return mapStudentListToStudentDtoList(studentService.findAllByName(name));
+        return mapStudentListToStudentInfoDtoList(studentService.findAllByName(name));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/students/surname/{surname}") //case sensitive
     public List<StudentInfoDto> getStudentsBySurname(@PathVariable String surname) {
-        return mapStudentListToStudentDtoList(studentService.findAllBySurname(surname));
+        return mapStudentListToStudentInfoDtoList(studentService.findAllBySurname(surname));
     }
 
     @ResponseStatus(HttpStatus.OK)

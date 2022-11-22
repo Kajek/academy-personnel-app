@@ -1,8 +1,7 @@
-package com.practice.student;
+package com.practice.teacher;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Id;
@@ -12,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Builder
-public class StudentInfoDto {
+public class TeacherInfoDto {
 
     // walidacje tutaj przez adnotacje
     @Id
@@ -25,6 +24,6 @@ public class StudentInfoDto {
     private int age;
     @Email(message = "Not a valid email adress")
     private String email;
-    @NotEmpty(message = "Major cannot be empty")
-    private String major;
+    @NotEmpty(message = "Course cannot be empty")
+    private String course;
 }

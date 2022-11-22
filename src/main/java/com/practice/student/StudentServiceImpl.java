@@ -17,7 +17,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public void addStudent(Student student) {
-        //metody do walidacji
+        //metody do walidacji tutaj lub w dto przez adnotacje
         studentRepository.save(student);
     }
 

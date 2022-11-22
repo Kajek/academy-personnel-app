@@ -1,7 +1,12 @@
 package com.practice.student;
 
+import com.practice.teacher.Teacher;
+import com.practice.teacher.TeacherDto;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.practice.teacher.TeacherMapper.mapTeacherListToTeacherInfoDtoList;
 
 public class StudentMapper {
 
@@ -31,4 +36,30 @@ public class StudentMapper {
                 .major(studentInfoDto.getMajor())
                 .build();
     }
+
+    public static List<StudentDto> mapStudentListToStudentDtoList(List<Student> students) {
+        return students.stream()
+                .map(student -> StudentDto.builder()
+                        .id(student.getId())
+                        .name(student.getName())
+                        .surname(student.getSurname())
+                        .age(student.getAge())
+                        .email(student.getEmail())
+                        .major(student.getMajor())
+                        .teachers(mapTeacherListToTeacherInfoDtoList(student.getTeachers()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+    public static StudentDto mapStudentToStudentDto(Student student) {
+        return StudentDto.builder()
+                .id(student.getId())
+                .name(student.getName())
+                .surname(student.getSurname())
+                .age(student.getAge())
+                .email(student.getEmail())
+                .major(student.getMajor())
+                .teachers(mapTeacherListToTeacherInfoDtoList(student.getTeachers()))
+                .build();
+    }
+
 }

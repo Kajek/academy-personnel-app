@@ -5,7 +5,7 @@ import com.practice.student.StudentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
+
 
 @Service
 public class TeacherServiceImpl implements TeacherService{
@@ -38,10 +38,6 @@ public class TeacherServiceImpl implements TeacherService{
         return teacherRepository.findAllBySurname(surname);
     }
 
-    @Override
-    public List<Student> findAllStudents() {
-        return null;
-    }
 
     @Override
     public void updateTeacher(Teacher teacher) {

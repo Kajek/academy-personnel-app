@@ -1,6 +1,7 @@
 package com.practice.student;
 
 import com.practice.teacher.Teacher;
+import com.practice.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,9 +10,11 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService{
 
     private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, TeacherRepository teacherRepository) {
         this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
     }
 
 
@@ -54,5 +57,13 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public void addTeacher(Long studentId, Long teacherId) {
+        Teacher teacher = teacherRepository.findById(teacherId).orElseThrow();
+        Student student = getStudent(studentId);
+        student.addTeacher(teacher);
+        studentRepository.save(student);
     }
 }

@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static com.practice.student.StudentMapper.mapStudentListToStudentInfoDtoList;
-import static com.practice.student.StudentMapper.mapStudentInfoDtoToStudent;
+import static com.practice.student.StudentMapper.*;
 
 @Slf4j
 @RestController
@@ -28,11 +27,17 @@ public class StudentController {
         return mapStudentListToStudentInfoDtoList(studentService.getAllStudents());
 
     }
-    @ResponseStatus(HttpStatus.OK)//przerobić z listą nauczycieli, inne dto, mapujące z relacją
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/students/teachers")
-    public List<StudentInfoDto> getStudentsWithTeachers() {
-        return mapStudentListToStudentInfoDtoList(studentService.getAllStudents());
+    public List<StudentDto> getStudentsWithTeachers() {
+        return mapStudentListToStudentDtoList(studentService.getAllStudents());
 
+    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("/students/{studentId}/teachers/{teacherId}")
+    public void addTeacherToStudent(@PathVariable Long studentId,
+                                    @PathVariable Long teacherId){
+        studentService.addTeacher(studentId, teacherId);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
@@ -49,9 +54,9 @@ public class StudentController {
 
     @ResponseStatus(HttpStatus.OK) // na dto tylko to juz z listą nauczycieli
     @GetMapping("/students/{id}")
-    public Student getStudentById(@PathVariable Long id) {
+    public StudentDto getStudentById(@PathVariable Long id) {
 
-        return studentService.getStudent(id);
+        return mapStudentToStudentDto(studentService.getStudent(id));
     }
 
     @ResponseStatus(HttpStatus.OK)

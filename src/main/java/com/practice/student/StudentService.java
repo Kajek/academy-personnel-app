@@ -22,4 +22,5 @@ public interface StudentService{
     Student getStudent(Long id);
 
     void deleteStudent(Long id);
+    void addTeacher(Long studentId, Long teacherId);
 }

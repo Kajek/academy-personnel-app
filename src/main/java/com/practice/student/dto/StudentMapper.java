@@ -1,12 +1,11 @@
-package com.practice.student;
+package com.practice.student.dto;
 
-import com.practice.teacher.Teacher;
-import com.practice.teacher.TeacherDto;
+import com.practice.student.Student;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.practice.teacher.TeacherMapper.mapTeacherListToTeacherInfoDtoList;
+import static com.practice.teacher.dto.TeacherMapper.mapTeacherListToTeacherInfoDtoList;
 
 public class StudentMapper {
 
@@ -29,6 +28,7 @@ public class StudentMapper {
 
     public static Student mapStudentInfoDtoToStudent(Long id, StudentInfoDto studentInfoDto) {
         return Student.builder()
+                .id(id)
                 .name(studentInfoDto.getName())
                 .surname(studentInfoDto.getSurname())
                 .age(studentInfoDto.getAge())
@@ -39,15 +39,7 @@ public class StudentMapper {
 
     public static List<StudentDto> mapStudentListToStudentDtoList(List<Student> students) {
         return students.stream()
-                .map(student -> StudentDto.builder()
-                        .id(student.getId())
-                        .name(student.getName())
-                        .surname(student.getSurname())
-                        .age(student.getAge())
-                        .email(student.getEmail())
-                        .major(student.getMajor())
-                        .teachers(mapTeacherListToTeacherInfoDtoList(student.getTeachers()))
-                        .build())
+                .map(student -> mapStudentToStudentDto(student))
                 .collect(Collectors.toList());
     }
     public static StudentDto mapStudentToStudentDto(Student student) {

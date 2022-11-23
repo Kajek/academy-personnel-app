@@ -1,7 +1,6 @@
-package com.practice.teacher;
+package com.practice.teacher.dto;
 
-import com.practice.student.Student;
-import com.practice.student.StudentInfoDto;
+import com.practice.student.dto.StudentInfoDto;
 import lombok.Builder;
 import lombok.Getter;
 

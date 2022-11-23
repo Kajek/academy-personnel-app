@@ -1,13 +1,11 @@
 package com.practice.student;
 
 
-import com.practice.teacher.Teacher;
-
 import java.util.List;
 
 public interface StudentService{
 
-    void addStudent(Student student);
+    Student addStudent(Student student);
 
     List<Student> getAllStudents();
 
@@ -15,12 +13,12 @@ public interface StudentService{
 
     List<Student> findAllBySurname(String surname);
 
-    List<Teacher> findAllTeachers(); // joinem custom zapytanie
-
-    void updateStudent(Student student);
+    Student updateStudent(Student student);
 
     Student getStudent(Long id);
 
     void deleteStudent(Long id);
     void addTeacher(Long studentId, Long teacherId);
+
+    void removeTeacher(Long studentId, Long teacherId);
 }

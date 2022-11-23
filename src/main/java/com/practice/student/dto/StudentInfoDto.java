@@ -1,4 +1,4 @@
-package com.practice.student;
+package com.practice.student.dto;
 
 import lombok.Builder;
 import lombok.Getter;

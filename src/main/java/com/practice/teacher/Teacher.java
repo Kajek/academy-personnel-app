@@ -35,7 +35,5 @@ public class Teacher {
         students.add(student);
     }
 
-    public void removeStudent(Student student){
-        // przekazywać student albo student id - chyba łatwiej
-    }
+
 }

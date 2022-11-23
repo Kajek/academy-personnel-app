@@ -5,6 +5,7 @@ import com.practice.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -19,9 +20,10 @@ public class StudentServiceImpl implements StudentService{
 
 
     @Override
-    public void addStudent(Student student) {
+    public Student addStudent(Student student) {
         //metody do walidacji tutaj lub w dto przez adnotacje
         studentRepository.save(student);
+        return student;
     }
 
     @Override
@@ -39,14 +41,11 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.findAllBySurname(surname);
     }
 
-    @Override
-    public List<Teacher> findAllTeachers() {
-        return null;
-    }
 
     @Override
-    public void updateStudent(Student student) {
+    public Student updateStudent(Student student) {
         studentRepository.save(student);
+        return student;
     }
 
     @Override
@@ -64,6 +63,12 @@ public class StudentServiceImpl implements StudentService{
         Teacher teacher = teacherRepository.findById(teacherId).orElseThrow();
         Student student = getStudent(studentId);
         student.addTeacher(teacher);
+        studentRepository.save(student);
+    }
+    @Override
+    public void removeTeacher(Long studentId,Long teacherId){
+        Student student = getStudent(studentId);
+        student.getTeachers().removeIf(teacher -> Objects.equals(teacher.getId(), teacherId));
         studentRepository.save(student);
     }
 }

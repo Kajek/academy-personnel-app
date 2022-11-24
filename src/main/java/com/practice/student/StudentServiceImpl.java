@@ -2,6 +2,8 @@ package com.practice.student;
 
 import com.practice.teacher.Teacher;
 import com.practice.teacher.TeacherRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,14 +23,18 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public Student addStudent(Student student) {
-        //metody do walidacji tutaj lub w dto przez adnotacje
         studentRepository.save(student);
         return student;
     }
 
     @Override
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<Student> findAllByNameAndSurname(String name, String surname) {
+        return studentRepository.findAllByNameAndSurname(name, surname);
+    }
+
+    @Override
+    public Page<Student> findAllStudents(Pageable p) {
+        return studentRepository.findAll(p);
     }
 
     @Override

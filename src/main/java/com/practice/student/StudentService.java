@@ -1,13 +1,19 @@
 package com.practice.student;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface StudentService{
 
     Student addStudent(Student student);
 
-    List<Student> getAllStudents();
+
+    List<Student> findAllByNameAndSurname(String name, String surname);
+
+    Page<Student> findAllStudents(Pageable p);
 
     List<Student> findAllByName(String name);
 

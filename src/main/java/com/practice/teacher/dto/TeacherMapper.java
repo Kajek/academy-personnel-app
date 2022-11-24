@@ -48,7 +48,7 @@ public class TeacherMapper {
 
     public static List<TeacherDto> mapTeacherListToTeacherDtoList(List<Teacher> teachers) {
         return teachers.stream()
-                .map(teacher -> mapTeacherToTeacherDto(teacher))
+                .map(TeacherMapper::mapTeacherToTeacherDto)
                 .collect(Collectors.toList());
     }
 

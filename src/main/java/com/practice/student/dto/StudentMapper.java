@@ -37,9 +37,19 @@ public class StudentMapper {
                 .build();
     }
 
+    public static StudentInfoDto mapStudentToStudentInfoDto(Student student) {
+        return StudentInfoDto.builder()
+                .id(student.getId())
+                .name(student.getName())
+                .surname(student.getSurname())
+                .age(student.getAge())
+                .email(student.getEmail())
+                .major(student.getMajor())
+                .build();
+    }
     public static List<StudentDto> mapStudentListToStudentDtoList(List<Student> students) {
         return students.stream()
-                .map(student -> mapStudentToStudentDto(student))
+                .map(StudentMapper::mapStudentToStudentDto)
                 .collect(Collectors.toList());
     }
     public static StudentDto mapStudentToStudentDto(Student student) {

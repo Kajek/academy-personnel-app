@@ -44,7 +44,7 @@ public class TeacherController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/teachers/students") //TODO paginacja?
+    @GetMapping("/teachers/students") // pagination and sorting can be added if needed. Like in getTeachers() method
     public Page<TeacherDto> getTeachersWithTheirStudents(
             @RequestParam(required = false, defaultValue = "0") String page
     ) {
@@ -93,13 +93,13 @@ public class TeacherController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/teachers/surname/{surname}") //case sensitive varaible
+    @GetMapping("/teachers/surname/{surname}") //case sensitive variable
     public List<TeacherInfoDto> getTeachersBySurname(@PathVariable String surname) {
         return mapTeacherListToTeacherInfoDtoList(teacherService.findAllBySurname(surname));
     }
 
     @ResponseStatus(HttpStatus.OK) // przetestować czy działa
-    @GetMapping("/teachers/name/{name}/surname/{surname}") //case sensitive
+    @GetMapping("/teachers/name/{name}/surname/{surname}") //case sensitive variables
     public List<TeacherInfoDto> getTeachersByNameAndSurname(@PathVariable String name,
                                                             @PathVariable String surname) {
         return mapTeacherListToTeacherInfoDtoList(teacherService.findAllByNameAndSurname(name, surname));

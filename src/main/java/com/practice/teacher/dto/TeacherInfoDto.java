@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 public class TeacherInfoDto {
 
-    // walidacje tutaj przez adnotacje
+
     @Id
     private Long id;
     @Length(min = 3)

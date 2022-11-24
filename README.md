@@ -20,7 +20,9 @@ Simple REST application for management of Teachers and Students.
 
 ☑️ Many-to-Many Relationship between entities
 
-☑️ Endpoints for all Teachers and Students(with sorting and pagination)
+☑️ Endpoints for all Teachers and all Students(with sorting and pagination)
+
+☑️ Endpoints for all Teachers and Students with all students/teachers assigned to them
 
 ☑️ Endpoints for single Teacher/Student with assigned students/teachers
 

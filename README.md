@@ -1,7 +1,7 @@
 
 # Academy Personnel App
 
-Project assigment for Junior Java Developer Recriutment
+Project assignment for Junior Java Developer recruitment
 
 Simple REST application for management of Teachers and Students.
 

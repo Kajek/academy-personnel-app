@@ -2,16 +2,14 @@ package com.practice.teacher;
 
 import com.practice.teacher.dto.TeacherDto;
 import com.practice.teacher.dto.TeacherInfoDto;
+import com.practice.teacher.dto.TeacherMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 import static com.practice.teacher.dto.TeacherMapper.*;
 
@@ -20,34 +18,39 @@ import static com.practice.teacher.dto.TeacherMapper.*;
 public class TeacherController {
 
     private static final Long EMPTY_ID = null;
+    public static final int PAGE_SIZE = 6;
     private final TeacherService teacherService;
 
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
 
-    @ResponseStatus(HttpStatus.OK) //działa
+
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/teachers")
-    public List<TeacherInfoDto> getTeachers() {
-        return mapTeacherListToTeacherInfoDtoList(teacherService.getAllTeachers());
+    public Page<TeacherInfoDto> getTeachers(
+            @RequestParam(required = false, defaultValue = "0") String page,
+            @RequestParam(required = false, defaultValue = "asc") String direction,
+            @RequestParam(required = false, defaultValue = "name") String sortBy
+            ) {
+        var sortDirection = "desc".equals(direction) ? Sort.Direction.DESC : Sort.Direction.ASC;
+        var sort = sortBy == null ? Sort.unsorted() : Sort.by(Sort.Order.by(sortBy).ignoreCase().with(sortDirection));
+
+        Pageable pageRequest = PageRequest.of(Integer.parseInt(page), PAGE_SIZE, sort);
+        Page<Teacher> teachers = teacherService.findAllTeachers(pageRequest);
+
+        return teachers.map(TeacherMapper::mapTeacherToTeacherInfoDto);
 
     }
 
-//    @ResponseStatus(HttpStatus.OK)
-//    @GetMapping("/teachers")
-//    public Page<TeacherInfoDto> getTeachers(
-//            @RequestParam(required = false) int page
-//            ) {
-//        int pageNumber = page > 0 ? page : 1;
-//        return mapTeacherListToTeacherInfoDtoList(teacherService
-//                .getAllTeachers(pageNumber - 1));
-//
-//    }
-
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/teachers/students")
-    public List<TeacherDto> getTeachersWithTheirStudents() {
-        return mapTeacherListToTeacherDtoList(teacherService.getAllTeachers());
+    @GetMapping("/teachers/students") //TODO paginacja?
+    public Page<TeacherDto> getTeachersWithTheirStudents(
+            @RequestParam(required = false, defaultValue = "0") String page
+    ) {
+        Page<Teacher> teachers = teacherService.findAllTeachers(PageRequest.of(Integer.parseInt(page), PAGE_SIZE));
+        return teachers.map(TeacherMapper::mapTeacherToTeacherDto);
+
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -84,15 +87,22 @@ public class TeacherController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/teachers/name/{name}") //case sensitive
+    @GetMapping("/teachers/name/{name}") //case sensitive variable
     public List<TeacherInfoDto> getTeachersByName(@PathVariable String name) {
         return mapTeacherListToTeacherInfoDtoList(teacherService.findAllByName(name));
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/teachers/surname/{surname}") //case sensitive
+    @GetMapping("/teachers/surname/{surname}") //case sensitive varaible
     public List<TeacherInfoDto> getTeachersBySurname(@PathVariable String surname) {
         return mapTeacherListToTeacherInfoDtoList(teacherService.findAllBySurname(surname));
+    }
+
+    @ResponseStatus(HttpStatus.OK) // przetestować czy działa
+    @GetMapping("/teachers/name/{name}/surname/{surname}") //case sensitive
+    public List<TeacherInfoDto> getTeachersByNameAndSurname(@PathVariable String name,
+                                                            @PathVariable String surname) {
+        return mapTeacherListToTeacherInfoDtoList(teacherService.findAllByNameAndSurname(name, surname));
     }
 
     @ResponseStatus(HttpStatus.OK)

@@ -35,6 +35,17 @@ public class TeacherMapper {
                 .build();
     }
 
+    public static TeacherInfoDto mapTeacherToTeacherInfoDto(Teacher teacher) {
+        return TeacherInfoDto.builder()
+                .id(teacher.getId())
+                .name(teacher.getName())
+                .surname(teacher.getSurname())
+                .age(teacher.getAge())
+                .email(teacher.getEmail())
+                .course(teacher.getCourse())
+                .build();
+    }
+
     public static List<TeacherDto> mapTeacherListToTeacherDtoList(List<Teacher> teachers) {
         return teachers.stream()
                 .map(teacher -> mapTeacherToTeacherDto(teacher))

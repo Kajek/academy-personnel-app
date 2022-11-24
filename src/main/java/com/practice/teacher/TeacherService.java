@@ -1,5 +1,7 @@
 package com.practice.teacher;
 
+import com.practice.teacher.dto.TeacherDto;
+import com.practice.teacher.dto.TeacherInfoDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,8 +11,10 @@ public interface TeacherService {
 
     Teacher addTeacher(Teacher teacher);
 
-    List<Teacher> getAllTeachers();
-//    Page getAllTeachers(int page);
+
+    List<Teacher> findAllByNameAndSurname(String name , String surname);
+
+    Page<Teacher> findAllTeachers(Pageable p);
 
     List<Teacher> findAllByName(String name);
 
